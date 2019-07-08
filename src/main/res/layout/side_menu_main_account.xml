@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/default_account"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:background="?attr/lighToolbarBackgroundColor"
@@ -14,13 +13,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/main_account_display_name"
             style="@style/main_account_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/main_account_address"
             style="@style/sip_uri_small_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -28,7 +25,6 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/main_account_status"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentTop="true"

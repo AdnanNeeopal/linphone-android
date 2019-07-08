@@ -41,7 +41,6 @@
         <include layout="@layout/side_menu_main_account" />
 
         <ListView
-            android:id="@+id/accounts_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cacheColorHint="@color/transparent_color"
@@ -50,7 +49,6 @@
             android:dividerHeight="0dp" />
 
         <ListView
-            android:id="@+id/item_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:choiceMode="singleChoice"

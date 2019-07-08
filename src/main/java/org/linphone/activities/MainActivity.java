@@ -61,15 +61,13 @@ import org.linphone.core.RegistrationState;
 import org.linphone.core.tools.Log;
 import org.linphone.fragments.EmptyFragment;
 import org.linphone.fragments.StatusBarFragment;
-import org.linphone.menu.SideMenuFragment;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.settings.SettingsActivity;
 import org.linphone.utils.DeviceUtils;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.PushNotificationUtils;
 
-public abstract class MainActivity extends LinphoneGenericActivity
-        implements StatusBarFragment.MenuClikedListener, SideMenuFragment.QuitClikedListener {
+public abstract class MainActivity extends LinphoneGenericActivity {
     protected static final int FRAGMENT_SPECIFIC_PERMISSION = 2;
     private static final int MAIN_PERMISSIONS = 1;
     protected View mContactsSelected;
@@ -310,14 +308,6 @@ public abstract class MainActivity extends LinphoneGenericActivity
         mDialerSelected.setVisibility(View.GONE);
         mChatSelected.setVisibility(View.GONE);
 
-        mStatusBarFragment.setMenuListener(this);
-        /*  mSideMenuFragment.setQuitListener(this);
-        mSideMenuFragment.displayAccountsInSideMenu();
-
-        if (mSideMenuFragment.isOpened()) {
-            mSideMenuFragment.closeDrawer();
-        }*/
-
         Core core = LinphoneManager.getCore();
         if (core != null) {
             core.addListener(mListener);
@@ -355,20 +345,6 @@ public abstract class MainActivity extends LinphoneGenericActivity
         } catch (IllegalStateException ise) {
             // Do not log this exception
         }
-    }
-
-    @Override
-    public void onMenuCliked() {
-        /* if (mSideMenuFragment.isOpened()) {
-            mSideMenuFragment.openOrCloseSideMenu(false, true);
-        } else {
-            mSideMenuFragment.openOrCloseSideMenu(true, true);
-        }*/
-    }
-
-    @Override
-    public void onQuitClicked() {
-        quit();
     }
 
     @Override

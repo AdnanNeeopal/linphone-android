@@ -49,7 +49,6 @@ import org.linphone.core.VideoActivationPolicy;
 import org.linphone.core.VideoDefinition;
 import org.linphone.core.tools.Log;
 import org.linphone.mediastream.Version;
-import org.linphone.purchase.Purchasable;
 import org.linphone.utils.LinphoneUtils;
 
 public class LinphonePreferences {
@@ -930,27 +929,6 @@ public class LinphonePreferences {
 
     public String getInAppPurchaseValidatingServerUrl() {
         return getConfig().getString("in-app-purchase", "server_url", null);
-    }
-
-    public Purchasable getInAppPurchasedItem() {
-        String id = getConfig().getString("in-app-purchase", "purchase_item_id", null);
-        String payload = getConfig().getString("in-app-purchase", "purchase_item_payload", null);
-        String signature =
-                getConfig().getString("in-app-purchase", "purchase_item_signature", null);
-        String username = getConfig().getString("in-app-purchase", "purchase_item_username", null);
-
-        return new Purchasable(id).setPayloadAndSignature(payload, signature).setUserData(username);
-    }
-
-    public void setInAppPurchasedItem(Purchasable item) {
-        if (item == null) return;
-
-        getConfig().setString("in-app-purchase", "purchase_item_id", item.getId());
-        getConfig().setString("in-app-purchase", "purchase_item_payload", item.getPayload());
-        getConfig()
-                .setString(
-                        "in-app-purchase", "purchase_item_signature", item.getPayloadSignature());
-        getConfig().setString("in-app-purchase", "purchase_item_username", item.getUserData());
     }
 
     public ArrayList<String> getInAppPurchasables() {
