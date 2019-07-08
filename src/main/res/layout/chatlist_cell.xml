@@ -95,7 +95,6 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/selected_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/notification_led_color"

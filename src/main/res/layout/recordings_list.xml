@@ -60,7 +60,6 @@
             android:dividerHeight="1dp" />
 
         <ProgressBar
-            android:id="@+id/recording_fetch_in_progress"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

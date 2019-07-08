@@ -45,7 +45,6 @@ import java.util.ArrayList;
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.R;
-import org.linphone.chat.ChatActivity;
 import org.linphone.compatibility.Compatibility;
 import org.linphone.contacts.ContactsActivity;
 import org.linphone.contacts.ContactsManager;
@@ -62,7 +61,6 @@ import org.linphone.core.RegistrationState;
 import org.linphone.core.tools.Log;
 import org.linphone.fragments.EmptyFragment;
 import org.linphone.fragments.StatusBarFragment;
-import org.linphone.menu.SideMenuFragment;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.settings.SettingsActivity;
 import org.linphone.utils.DeviceUtils;
@@ -70,7 +68,7 @@ import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.PushNotificationUtils;
 
 public abstract class MainActivity extends LinphoneGenericActivity
-        implements StatusBarFragment.MenuClikedListener, SideMenuFragment.QuitClikedListener {
+        implements StatusBarFragment.MenuClikedListener {
     protected static final int FRAGMENT_SPECIFIC_PERMISSION = 2;
     private static final int MAIN_PERMISSIONS = 1;
     protected View mContactsSelected;
@@ -368,11 +366,6 @@ public abstract class MainActivity extends LinphoneGenericActivity
     }
 
     @Override
-    public void onQuitClicked() {
-        quit();
-    }
-
-    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mOnBackPressGoHome) {
@@ -640,13 +633,6 @@ public abstract class MainActivity extends LinphoneGenericActivity
         changeFragment(new EmptyFragment(), "Empty", true);
     }
 
-    public void showAccountSettings(int accountIndex) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        addFlagsToIntent(intent);
-        intent.putExtra("Account", accountIndex);
-        startActivity(intent);
-    }
-
     public void showContactDetails(LinphoneContact contact) {
         Intent intent = new Intent(this, ContactsActivity.class);
         addFlagsToIntent(intent);
@@ -667,17 +653,7 @@ public abstract class MainActivity extends LinphoneGenericActivity
         startActivity(intent);
     }
 
-    public void showChatRoom(Address localAddress, Address peerAddress) {
-        Intent intent = new Intent(this, ChatActivity.class);
-        addFlagsToIntent(intent);
-        if (localAddress != null) {
-            intent.putExtra("LocalSipUri", localAddress.asStringUriOnly());
-        }
-        if (peerAddress != null) {
-            intent.putExtra("RemoteSipUri", peerAddress.asStringUriOnly());
-        }
-        startActivity(intent);
-    }
+    public void showChatRoom(Address localAddress, Address peerAddress) {}
 
     // Dialogs
 

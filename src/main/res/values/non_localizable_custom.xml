@@ -4,13 +4,11 @@
     <!-- URLs, URIs and domain -->
     <!-- Set the default domain used for account creation/addresses -->
     <string name="default_domain" translatable="false">sip.linphone.org</string>
-    <string name="default_stun" translatable="false">stun.linphone.org</string>
     <string name="default_conference_factory_uri" translatable="false">sip:conference-factory@sip.linphone.org</string>
     <string name="default_lime_x3dh_server_url" translatable="false">https://lime.linphone.org/lime-server/lime-server.php</string>
     <string name="rls_uri" translatable="false">sip:rls@sip.linphone.org</string>
     <string name="about_link" translatable="false">https://linphone.org</string>
     <string name="download_link" translatable="false">https://linphone.org/download</string>
-    <string name="recover_password_link" translatable="false">https://linphone.org/freesip/recover</string>
     <string name="about_privacy_policy_link" translatable="false">https://www.linphone.org/terms-and-privacy</string>
     <string name="about_license_link" translatable="false">https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</string>
 
@@ -38,8 +36,6 @@
     <!-- Time -->
     <string name="history_date_format" translatable="false">EEE d MMM</string>
     <string name="history_detail_date_format" translatable="false">yyyy/MM/dd - HH:mm</string>
-    <string name="inapp_popup_date_format" translatable="false">yyyy/MM/dd</string>
-    <string name="inapp_popup_date_day" translatable="false">dd</string>
     <string name="messages_date_format" translatable="false">dd/MM, HH:mm</string>
     <string name="messages_list_date_format" translatable="false">dd/MM</string>
     <string name="today_date_format" translatable="false">HH:mm</string>
@@ -65,7 +61,6 @@
     <bool name="hide_remote_provisioning_in_assistant">false</bool>
     <!-- Set the email field of the wizard with one of the gmail account registered on the device -->
     <bool name="pre_fill_email_in_assistant">true</bool>
-    <bool name="assistant_account_validation_mandatory">false</bool>
     <bool name="display_account_assistant_at_first_start">true</bool>
     <bool name="forbid_to_leave_assistant_before_account_configuration">false</bool>
 
@@ -80,7 +75,6 @@
     <bool name="isTablet">false</bool>
 
     <!-- Settings -->
-    <bool name="disable_every_log">false</bool>
     <bool name="disable_all_security_features_for_markets">false </bool>
     <bool name="hide_accounts">false</bool>
 
@@ -131,9 +125,7 @@
     <!-- Inapp -->
     <bool name="enable_in_app_purchase">false</bool>
     <!-- Notification shown before end of trial version in days -->
-    <integer name="days_notification_shown">5</integer>
     <!-- Time between two inapp notifications in milliseconds -->
-    <integer name="time_between_inapp_notification">86400000</integer>
     <bool name="hide_username_in_inapp">true</bool>
 
 </resources>

@@ -71,7 +71,7 @@ class ApiTwentyFivePlus {
 
             if (contact != null && !contacts.contains(contact)) {
                 String peerAddress = room.getPeerAddress().asStringUriOnly();
-                ShortcutInfo shortcut = manager.createChatRoomShortcutInfo(contact, peerAddress);
+                ShortcutInfo shortcut = null;
                 if (shortcut != null) {
                     Log.i(
                             "[Shortcut] Creating launcher shortcut "

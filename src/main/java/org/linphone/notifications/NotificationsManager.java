@@ -38,7 +38,6 @@ import org.linphone.activities.DialerActivity;
 import org.linphone.call.CallActivity;
 import org.linphone.call.CallIncomingActivity;
 import org.linphone.call.CallOutgoingActivity;
-import org.linphone.chat.ChatActivity;
 import org.linphone.compatibility.Compatibility;
 import org.linphone.contacts.ContactsManager;
 import org.linphone.contacts.LinphoneContact;
@@ -52,7 +51,6 @@ import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Reason;
 import org.linphone.core.tools.Log;
-import org.linphone.history.HistoryActivity;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.FileUtils;
 import org.linphone.utils.ImageUtils;
@@ -302,7 +300,7 @@ public class NotificationsManager {
         notif.setMyself(LinphoneUtils.getAddressDisplayName(localIdentity));
         notif.setLocalIdentity(localIdentity.asString());
 
-        Intent notifIntent = new Intent(mContext, ChatActivity.class);
+        Intent notifIntent = new Intent(mContext, null);
         notifIntent.putExtra("RemoteSipUri", conferenceAddress);
         notifIntent.putExtra("LocalSipUri", localIdentity.asStringUriOnly());
         PendingIntent pendingIntent =
@@ -354,7 +352,7 @@ public class NotificationsManager {
         notif.setMyself(LinphoneUtils.getAddressDisplayName(localIdentity));
         notif.setLocalIdentity(localIdentity.asString());
 
-        Intent notifIntent = new Intent(mContext, ChatActivity.class);
+        Intent notifIntent = new Intent(mContext, null);
         notifIntent.putExtra("RemoteSipUri", fromSipUri);
         notifIntent.putExtra("LocalSipUri", localIdentity.asStringUriOnly());
         PendingIntent pendingIntent =
@@ -368,43 +366,6 @@ public class NotificationsManager {
                 Compatibility.createMessageNotification(
                         mContext, notif, fromName, message, bm, pendingIntent);
         sendNotification(notif.getNotificationId(), notification);
-    }
-
-    public void displayMissedCallNotification(Call call) {
-        Intent missedCallNotifIntent = new Intent(mContext, HistoryActivity.class);
-        PendingIntent pendingIntent =
-                PendingIntent.getActivity(
-                        mContext,
-                        MISSED_CALLS_NOTIF_ID,
-                        missedCallNotifIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-
-        int missedCallCount = LinphoneManager.getCore().getMissedCallsCount();
-        String body;
-        if (missedCallCount > 1) {
-            body =
-                    mContext.getString(R.string.missed_calls_notif_body)
-                            .replace("%i", String.valueOf(missedCallCount));
-        } else {
-            Address address = call.getRemoteAddress();
-            LinphoneContact c = ContactsManager.getInstance().findContactFromAddress(address);
-            if (c != null) {
-                body = c.getFullName();
-            } else {
-                body = address.getDisplayName();
-                if (body == null) {
-                    body = address.asStringUriOnly();
-                }
-            }
-        }
-
-        Notification notif =
-                Compatibility.createMissedCallNotification(
-                        mContext,
-                        mContext.getString(R.string.missed_calls_notif_title),
-                        body,
-                        pendingIntent);
-        sendNotification(MISSED_CALLS_NOTIF_ID, notif);
     }
 
     public void displayCallNotification(Call call) {

@@ -76,7 +76,6 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:id="@+id/history"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -111,7 +110,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/contacts"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -203,22 +201,6 @@
                 android:visibility="gone">
 
             </LinearLayout>
-
-        </RelativeLayout>
-
-        <!-- Side Menu -->
-        <RelativeLayout
-            android:id="@+id/side_menu_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="left">
-
-            <fragment
-                android:id="@+id/side_menu_fragment"
-                android:name="org.linphone.menu.SideMenuFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout="@layout/side_menu" />
 
         </RelativeLayout>
 

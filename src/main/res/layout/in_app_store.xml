@@ -18,7 +18,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/username_label"
                 style="@style/assistant_input_field_header_font"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +50,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/email_label"
                 style="@style/assistant_input_field_header_font"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

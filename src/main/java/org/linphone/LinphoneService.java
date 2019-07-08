@@ -164,9 +164,7 @@ public final class LinphoneService extends Service {
                             destroyOverlay();
 
                             if (state == State.Released
-                                    && call.getCallLog().getStatus() == Call.Status.Missed) {
-                                mNotificationManager.displayMissedCallNotification(call);
-                            }
+                                    && call.getCallLog().getStatus() == Call.Status.Missed) {}
                         }
                     }
                 };

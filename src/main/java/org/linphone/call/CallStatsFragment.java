@@ -38,7 +38,7 @@ import org.linphone.core.CoreListenerStub;
 
 public class CallStatsFragment extends Fragment {
     private DrawerLayout mSideMenu;
-    private RelativeLayout mSideMenuContent;;
+    private RelativeLayout mSideMenuContent;
     private ExpandableListView mExpandableList;
     private CallStatsAdapter mAdapter;
     private CoreListenerStub mListener;
