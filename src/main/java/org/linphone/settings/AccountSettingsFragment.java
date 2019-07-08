@@ -420,9 +420,9 @@ public class AccountSettingsFragment extends SettingsFragment {
                                 core.setDefaultProxyConfig(mProxyConfig);
                                 mUseAsDefault.setEnabled(false);
                             }
-                            ((SettingsActivity) getActivity())
-                                    .getSideMenuFragment()
-                                    .displayAccountsInSideMenu();
+                            /*  ((SettingsActivity) getActivity())
+                            .getSideMenuFragment()
+                            .displayAccountsInSideMenu();*/
                         } else {
                             Log.e("[Account Settings] No proxy config !");
                         }
@@ -547,9 +547,9 @@ public class AccountSettingsFragment extends SettingsFragment {
                             }
                         }
 
-                        ((SettingsActivity) getActivity())
-                                .getSideMenuFragment()
-                                .displayAccountsInSideMenu();
+                        /*  ((SettingsActivity) getActivity())
+                        .getSideMenuFragment()
+                        .displayAccountsInSideMenu();*/
                         ((SettingsActivity) getActivity()).goBack();
                     }
                 });

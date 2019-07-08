@@ -36,7 +36,6 @@ import java.util.Collection;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.call.CallActivity;
-import org.linphone.contacts.ContactsActivity;
 import org.linphone.contacts.ContactsManager;
 import org.linphone.core.Call;
 import org.linphone.core.Core;
@@ -53,7 +52,8 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
 
     private AddressText mAddress;
     private CallButton mStartCall, mAddCall, mTransferCall;
-    private ImageView mAddContact, mBackToCall;
+    // private ImageView mAddContact;
+    private ImageView mBackToCall;
 
     private boolean mIsTransfer;
     private CoreListenerStub mListener;
@@ -166,7 +166,7 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         mTransferCall.setAddressWidget(mAddress);
         mTransferCall.setIsTransfer(true);
 
-        mAddContact = view.findViewById(R.id.add_contact);
+        /*  mAddContact = view.findViewById(R.id.add_contact);
         mAddContact.setEnabled(false);
         mAddContact.setOnClickListener(
                 new View.OnClickListener() {
@@ -177,7 +177,7 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
                         intent.putExtra("SipAddress", mAddress.getText().toString());
                         startActivity(intent);
                     }
-                });
+                });*/
 
         mBackToCall = view.findViewById(R.id.back_to_call);
         mBackToCall.setOnClickListener(
@@ -242,8 +242,8 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
     @Override
     public void onAddressChanged() {
         Core core = LinphoneManager.getCore();
-        mAddContact.setEnabled(
-                core != null && core.getCallsNb() > 0 || !mAddress.getText().toString().equals(""));
+        /*  mAddContact.setEnabled(
+        core != null && core.getCallsNb() > 0 || !mAddress.getText().toString().equals(""));*/
     }
 
     private void updateLayout() {
@@ -254,7 +254,7 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
 
         boolean atLeastOneCall = core.getCallsNb() > 0;
         mStartCall.setVisibility(atLeastOneCall ? View.GONE : View.VISIBLE);
-        mAddContact.setVisibility(atLeastOneCall ? View.GONE : View.VISIBLE);
+        //  mAddContact.setVisibility(atLeastOneCall ? View.GONE : View.VISIBLE);
         if (!atLeastOneCall) {
             if (core.getVideoActivationPolicy().getAutomaticallyInitiate()) {
                 mStartCall.setImageResource(R.drawable.call_video_start);

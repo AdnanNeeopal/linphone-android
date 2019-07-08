@@ -38,11 +38,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import java.util.ArrayList;
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
@@ -64,7 +62,6 @@ import org.linphone.core.RegistrationState;
 import org.linphone.core.tools.Log;
 import org.linphone.fragments.EmptyFragment;
 import org.linphone.fragments.StatusBarFragment;
-import org.linphone.history.HistoryActivity;
 import org.linphone.menu.SideMenuFragment;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.settings.SettingsActivity;
@@ -74,26 +71,22 @@ import org.linphone.utils.PushNotificationUtils;
 
 public abstract class MainActivity extends LinphoneGenericActivity
         implements StatusBarFragment.MenuClikedListener, SideMenuFragment.QuitClikedListener {
-    private static final int MAIN_PERMISSIONS = 1;
     protected static final int FRAGMENT_SPECIFIC_PERMISSION = 2;
-
-    private TextView mMissedCalls;
-    private TextView mMissedMessages;
+    private static final int MAIN_PERMISSIONS = 1;
     protected View mContactsSelected;
     protected View mHistorySelected;
-    View mDialerSelected;
     protected View mChatSelected;
-    private LinearLayout mTopBar;
-    private TextView mTopBarTitle;
-    private LinearLayout mTabBar;
-
-    private SideMenuFragment mSideMenuFragment;
-    private StatusBarFragment mStatusBarFragment;
-
     protected boolean mOnBackPressGoHome;
     protected boolean mAlwaysHideTabBar;
     protected String[] mPermissionsToHave;
-
+    View mDialerSelected;
+    private TextView mMissedCalls;
+    // private LinearLayout mTabBar;
+    private TextView mMissedMessages;
+    private LinearLayout mTopBar;
+    private TextView mTopBarTitle;
+    // private SideMenuFragment mSideMenuFragment;
+    private StatusBarFragment mStatusBarFragment;
     private CoreListenerStub mListener;
 
     @Override
@@ -112,7 +105,7 @@ public abstract class MainActivity extends LinphoneGenericActivity
         mOnBackPressGoHome = true;
         mAlwaysHideTabBar = false;
 
-        RelativeLayout history = findViewById(R.id.history);
+        /* RelativeLayout history = findViewById(R.id.history);
         history.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -151,7 +144,7 @@ public abstract class MainActivity extends LinphoneGenericActivity
                         addFlagsToIntent(intent);
                         startActivity(intent);
                     }
-                });
+                });*/
 
         mMissedCalls = findViewById(R.id.missed_calls);
         mMissedMessages = findViewById(R.id.missed_chats);
@@ -161,7 +154,7 @@ public abstract class MainActivity extends LinphoneGenericActivity
         mDialerSelected = findViewById(R.id.dialer_select);
         mChatSelected = findViewById(R.id.chat_select);
 
-        mTabBar = findViewById(R.id.footer);
+        //  mTabBar = findViewById(R.id.footer);
         mTopBar = findViewById(R.id.top_bar);
         mTopBarTitle = findViewById(R.id.top_bar_title);
 
@@ -177,17 +170,17 @@ public abstract class MainActivity extends LinphoneGenericActivity
         mStatusBarFragment =
                 (StatusBarFragment) getFragmentManager().findFragmentById(R.id.status_fragment);
 
-        DrawerLayout mSideMenu = findViewById(R.id.side_menu);
-        RelativeLayout mSideMenuContent = findViewById(R.id.side_menu_content);
-        mSideMenuFragment =
-                (SideMenuFragment)
-                        getSupportFragmentManager().findFragmentById(R.id.side_menu_fragment);
-        mSideMenuFragment.setDrawer(mSideMenu, mSideMenuContent);
+        /*   DrawerLayout mSideMenu = findViewById(R.id.side_menu);
+                RelativeLayout mSideMenuContent = findViewById(R.id.side_menu_content);
+                mSideMenuFragment =
+                        (SideMenuFragment)
+                                getSupportFragmentManager().findFragmentById(R.id.side_menu_fragment);
+                mSideMenuFragment.setDrawer(mSideMenu, mSideMenuContent);
 
-        if (getResources().getBoolean(R.bool.disable_chat)) {
-            chat.setVisibility(View.GONE);
-        }
-
+                if (getResources().getBoolean(R.bool.disable_chat)) {
+                    chat.setVisibility(View.GONE);
+                }
+        */
         mListener =
                 new CoreListenerStub() {
                     @Override
@@ -220,7 +213,7 @@ public abstract class MainActivity extends LinphoneGenericActivity
                             ProxyConfig proxyConfig,
                             RegistrationState state,
                             String message) {
-                        mSideMenuFragment.displayAccountsInSideMenu();
+                        // mSideMenuFragment.displayAccountsInSideMenu();
 
                         if (state == RegistrationState.Ok) {
                             // For push notifications to work on some devices,
@@ -306,12 +299,12 @@ public abstract class MainActivity extends LinphoneGenericActivity
                 .removeForegroundServiceNotificationIfPossible();
 
         hideTopBar();
-        if (!mAlwaysHideTabBar
+        /* if (!mAlwaysHideTabBar
                 && (getFragmentManager().getBackStackEntryCount() == 0
                         || !getResources()
                                 .getBoolean(R.bool.hide_bottom_bar_on_second_level_views))) {
             showTabBar();
-        }
+        }*/
 
         mHistorySelected.setVisibility(View.GONE);
         mContactsSelected.setVisibility(View.GONE);
@@ -319,12 +312,12 @@ public abstract class MainActivity extends LinphoneGenericActivity
         mChatSelected.setVisibility(View.GONE);
 
         mStatusBarFragment.setMenuListener(this);
-        mSideMenuFragment.setQuitListener(this);
+        /*  mSideMenuFragment.setQuitListener(this);
         mSideMenuFragment.displayAccountsInSideMenu();
 
         if (mSideMenuFragment.isOpened()) {
             mSideMenuFragment.closeDrawer();
-        }
+        }*/
 
         Core core = LinphoneManager.getCore();
         if (core != null) {
@@ -337,7 +330,7 @@ public abstract class MainActivity extends LinphoneGenericActivity
     @Override
     protected void onPause() {
         mStatusBarFragment.setMenuListener(null);
-        mSideMenuFragment.setQuitListener(null);
+        //  mSideMenuFragment.setQuitListener(null);
 
         Core core = LinphoneManager.getCore();
         if (core != null) {
@@ -367,11 +360,11 @@ public abstract class MainActivity extends LinphoneGenericActivity
 
     @Override
     public void onMenuCliked() {
-        if (mSideMenuFragment.isOpened()) {
+        /* if (mSideMenuFragment.isOpened()) {
             mSideMenuFragment.openOrCloseSideMenu(false, true);
         } else {
             mSideMenuFragment.openOrCloseSideMenu(true, true);
-        }
+        }*/
     }
 
     @Override
@@ -442,13 +435,13 @@ public abstract class MainActivity extends LinphoneGenericActivity
     }
 
     public void hideTabBar() {
-        if (!isTablet()) { // do not hide if tablet, otherwise won't be able to navigate...
+        /* if (!isTablet()) { // do not hide if tablet, otherwise won't be able to navigate...
             mTabBar.setVisibility(View.GONE);
-        }
+        }*/
     }
 
     public void showTabBar() {
-        mTabBar.setVisibility(View.VISIBLE);
+        //  mTabBar.setVisibility(View.VISIBLE);
     }
 
     protected void hideTopBar() {
@@ -771,7 +764,7 @@ public abstract class MainActivity extends LinphoneGenericActivity
 
     // Others
 
-    public SideMenuFragment getSideMenuFragment() {
+    /*  public SideMenuFragment getSideMenuFragment() {
         return mSideMenuFragment;
-    }
+    }*/
 }

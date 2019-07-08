@@ -67,6 +67,7 @@
                 android:orientation="horizontal" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:baselineAligned="false"
                 android:id="@+id/footer"
                 android:layout_width="match_parent"

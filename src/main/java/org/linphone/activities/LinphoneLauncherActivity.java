@@ -28,8 +28,6 @@ import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.R;
 import org.linphone.assistant.MenuAssistantActivity;
-import org.linphone.chat.ChatActivity;
-import org.linphone.history.HistoryActivity;
 import org.linphone.settings.LinphonePreferences;
 
 /** Creates LinphoneService and wait until Core is ready to start main Activity */
@@ -72,19 +70,19 @@ public class LinphoneLauncherActivity extends Activity {
         if (useFirstLoginActivity && LinphonePreferences.instance().isFirstLaunch()) {
             classToStart = MenuAssistantActivity.class;
         } else {
-            if (getIntent().getExtras() != null) {
-                String activity = getIntent().getExtras().getString("Activity", null);
-                if (ChatActivity.NAME.equals(activity)) {
-                    classToStart = ChatActivity.class;
-                } else if (HistoryActivity.NAME.equals(activity)) {
-                    classToStart = HistoryActivity.class;
-                } else {
-                    classToStart = DialerActivity.class;
-                }
-            } else {
-                classToStart = DialerActivity.class;
-            }
-        }
+            classToStart = DialerActivity.class;
+        } /* else {
+              if (getIntent().getExtras() != null) {
+                  String activity = getIntent().getExtras().getString("Activity", null);
+                  if (ChatActivity.NAME.equals(activity)) {
+                      classToStart = ChatActivity.class;
+                  } else if (HistoryActivity.NAME.equals(activity)) {
+                      classToStart = HistoryActivity.class;
+                  } else {
+                      classToStart = DialerActivity.class;
+                  }
+              }
+          }*/
 
         if (getResources().getBoolean(R.bool.check_for_update_when_app_starts)) {
             LinphoneManager.getInstance().checkForUpdate();
