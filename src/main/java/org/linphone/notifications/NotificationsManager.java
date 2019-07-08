@@ -35,10 +35,10 @@ import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.R;
 import org.linphone.activities.DialerActivity;
+import org.linphone.activities.MainActivity;
 import org.linphone.call.CallActivity;
 import org.linphone.call.CallIncomingActivity;
 import org.linphone.call.CallOutgoingActivity;
-import org.linphone.chat.ChatActivity;
 import org.linphone.compatibility.Compatibility;
 import org.linphone.contacts.ContactsManager;
 import org.linphone.contacts.LinphoneContact;
@@ -52,9 +52,7 @@ import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Reason;
 import org.linphone.core.tools.Log;
-import org.linphone.history.HistoryActivity;
 import org.linphone.settings.LinphonePreferences;
-import org.linphone.utils.FileUtils;
 import org.linphone.utils.ImageUtils;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.MediaScannerListener;
@@ -178,24 +176,10 @@ public class NotificationsManager {
                                                 new MediaScannerListener() {
                                                     @Override
                                                     public void onMediaScanned(
-                                                            String path, Uri uri) {
-                                                        createNotification(
-                                                                cr,
-                                                                contact,
-                                                                from,
-                                                                textMessage,
-                                                                message.getTime(),
-                                                                uri,
-                                                                FileUtils.getMimeFromFile(path));
-                                                    }
+                                                            String path, Uri uri) {}
                                                 });
                                 break;
                             }
-                        }
-
-                        if (file == null) {
-                            createNotification(
-                                    cr, contact, from, textMessage, message.getTime(), null, null);
                         }
 
                         if (cr.hasCapability(ChatRoomCapabilities.OneToOne.toInt())) {
@@ -274,104 +258,8 @@ public class NotificationsManager {
         return null;
     }
 
-    public void displayGroupChatMessageNotification(
-            String subject,
-            String conferenceAddress,
-            String fromName,
-            Uri fromPictureUri,
-            String message,
-            Address localIdentity,
-            long timestamp,
-            Uri filePath,
-            String fileMime) {
-
-        Bitmap bm = ImageUtils.getRoundBitmapFromUri(mContext, fromPictureUri);
-        Notifiable notif = mChatNotifMap.get(conferenceAddress);
-        NotifiableMessage notifMessage =
-                new NotifiableMessage(message, fromName, timestamp, filePath, fileMime);
-        if (notif == null) {
-            notif = new Notifiable(mLastNotificationId);
-            mLastNotificationId += 1;
-            mChatNotifMap.put(conferenceAddress, notif);
-        }
-
-        notifMessage.setSenderBitmap(bm);
-        notif.addMessage(notifMessage);
-        notif.setIsGroup(true);
-        notif.setGroupTitle(subject);
-        notif.setMyself(LinphoneUtils.getAddressDisplayName(localIdentity));
-        notif.setLocalIdentity(localIdentity.asString());
-
-        Intent notifIntent = new Intent(mContext, ChatActivity.class);
-        notifIntent.putExtra("RemoteSipUri", conferenceAddress);
-        notifIntent.putExtra("LocalSipUri", localIdentity.asStringUriOnly());
-        PendingIntent pendingIntent =
-                PendingIntent.getActivity(
-                        mContext,
-                        notif.getNotificationId(),
-                        notifIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification notification =
-                Compatibility.createMessageNotification(
-                        mContext,
-                        notif,
-                        subject,
-                        mContext.getString(R.string.group_chat_notif)
-                                .replace("%1", fromName)
-                                .replace("%2", message),
-                        bm,
-                        pendingIntent);
-        sendNotification(notif.getNotificationId(), notification);
-    }
-
-    public void displayMessageNotification(
-            String fromSipUri,
-            String fromName,
-            Uri fromPictureUri,
-            String message,
-            Address localIdentity,
-            long timestamp,
-            Uri filePath,
-            String fileMime) {
-        if (fromName == null) {
-            fromName = fromSipUri;
-        }
-
-        Bitmap bm = ImageUtils.getRoundBitmapFromUri(mContext, fromPictureUri);
-        Notifiable notif = mChatNotifMap.get(fromSipUri);
-        NotifiableMessage notifMessage =
-                new NotifiableMessage(message, fromName, timestamp, filePath, fileMime);
-        if (notif == null) {
-            notif = new Notifiable(mLastNotificationId);
-            mLastNotificationId += 1;
-            mChatNotifMap.put(fromSipUri, notif);
-        }
-
-        notifMessage.setSenderBitmap(bm);
-        notif.addMessage(notifMessage);
-        notif.setIsGroup(false);
-        notif.setMyself(LinphoneUtils.getAddressDisplayName(localIdentity));
-        notif.setLocalIdentity(localIdentity.asString());
-
-        Intent notifIntent = new Intent(mContext, ChatActivity.class);
-        notifIntent.putExtra("RemoteSipUri", fromSipUri);
-        notifIntent.putExtra("LocalSipUri", localIdentity.asStringUriOnly());
-        PendingIntent pendingIntent =
-                PendingIntent.getActivity(
-                        mContext,
-                        notif.getNotificationId(),
-                        notifIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification notification =
-                Compatibility.createMessageNotification(
-                        mContext, notif, fromName, message, bm, pendingIntent);
-        sendNotification(notif.getNotificationId(), notification);
-    }
-
     public void displayMissedCallNotification(Call call) {
-        Intent missedCallNotifIntent = new Intent(mContext, HistoryActivity.class);
+        Intent missedCallNotifIntent = new Intent(mContext, MainActivity.class);
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(
                         mContext,
@@ -545,63 +433,5 @@ public class NotificationsManager {
 
     public void dismissNotification(int notifId) {
         mNM.cancel(notifId);
-    }
-
-    private void createNotification(
-            ChatRoom cr,
-            LinphoneContact contact,
-            Address from,
-            String textMessage,
-            long time,
-            Uri file,
-            String mime) {
-        if (cr.hasCapability(ChatRoomCapabilities.OneToOne.toInt())) {
-            if (contact != null) {
-                displayMessageNotification(
-                        cr.getPeerAddress().asStringUriOnly(),
-                        contact.getFullName(),
-                        contact.getThumbnailUri(),
-                        textMessage,
-                        cr.getLocalAddress(),
-                        time,
-                        file,
-                        mime);
-            } else {
-                displayMessageNotification(
-                        cr.getPeerAddress().asStringUriOnly(),
-                        from.getUsername(),
-                        null,
-                        textMessage,
-                        cr.getLocalAddress(),
-                        time,
-                        file,
-                        mime);
-            }
-        } else {
-            String subject = cr.getSubject();
-            if (contact != null) {
-                displayGroupChatMessageNotification(
-                        subject,
-                        cr.getPeerAddress().asStringUriOnly(),
-                        contact.getFullName(),
-                        contact.getThumbnailUri(),
-                        textMessage,
-                        cr.getLocalAddress(),
-                        time,
-                        file,
-                        mime);
-            } else {
-                displayGroupChatMessageNotification(
-                        subject,
-                        cr.getPeerAddress().asStringUriOnly(),
-                        from.getUsername(),
-                        null,
-                        textMessage,
-                        cr.getLocalAddress(),
-                        time,
-                        file,
-                        mime);
-            }
-        }
     }
 }

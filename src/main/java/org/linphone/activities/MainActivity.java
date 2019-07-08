@@ -45,7 +45,6 @@ import java.util.ArrayList;
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.R;
-import org.linphone.chat.ChatActivity;
 import org.linphone.compatibility.Compatibility;
 import org.linphone.contacts.ContactsActivity;
 import org.linphone.contacts.ContactsManager;
@@ -667,17 +666,7 @@ public abstract class MainActivity extends LinphoneGenericActivity
         startActivity(intent);
     }
 
-    public void showChatRoom(Address localAddress, Address peerAddress) {
-        Intent intent = new Intent(this, ChatActivity.class);
-        addFlagsToIntent(intent);
-        if (localAddress != null) {
-            intent.putExtra("LocalSipUri", localAddress.asStringUriOnly());
-        }
-        if (peerAddress != null) {
-            intent.putExtra("RemoteSipUri", peerAddress.asStringUriOnly());
-        }
-        startActivity(intent);
-    }
+    public void showChatRoom(Address localAddress, Address peerAddress) {}
 
     // Dialogs
 
