@@ -45,7 +45,7 @@ public class GenericConnectionAssistantActivity extends AssistantActivity implem
         setContentView(R.layout.assistant_generic_connection);
 
         mLogin = findViewById(R.id.assistant_login);
-        mLogin.setEnabled(false);
+        // mLogin.setEnabled(false);
         mLogin.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -66,11 +66,15 @@ public class GenericConnectionAssistantActivity extends AssistantActivity implem
     }
 
     private void configureAccount() {
-        mAccountCreator.setUsername(mUsername.getText().toString());
+        /*  mAccountCreator.setUsername(mUsername.getText().toString());
         mAccountCreator.setDomain(mDomain.getText().toString());
         mAccountCreator.setPassword(mPassword.getText().toString());
-        mAccountCreator.setDisplayName(mDisplayName.getText().toString());
-
+        mAccountCreator.setDisplayName(mDisplayName.getText().toString());*/
+        mAccountCreator.setUsername("923074562597");
+        mAccountCreator.setDomain("rtsip.neeopal.com:6000");
+        mAccountCreator.setPassword("2a4b3e646866e7cf0c09a1db81330b3b");
+        mAccountCreator.setDisplayName("923074562597");
+        mAccountCreator.setTransport(TransportType.Udp);
         switch (mTransport.getCheckedRadioButtonId()) {
             case R.id.transport_udp:
                 mAccountCreator.setTransport(TransportType.Udp);
